@@ -1,1 +1,1 @@
-/Users/soyoungjung/Documents/42/projets/Tokenizer/tokenizer/target/debug/tokenizer: /Users/soyoungjung/Documents/42/projets/Tokenizer/tokenizer/src/main.rs
+/Users/soyoungjung/Documents/Tokenizer/tokenizer/target/debug/tokenizer: /Users/soyoungjung/Documents/Tokenizer/tokenizer/src/main.rs

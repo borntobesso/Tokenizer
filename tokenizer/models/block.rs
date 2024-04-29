@@ -24,6 +24,10 @@ impl Block {
 		let mut block_data = self.clone();
 		block_data.hash = String::defalut();
 		let serialized_block_data = serde_json::to_string(&block_data).unwrap();
-		
+		// Calculate and return SHA-256 hash value.
+		let mut hasher = Sha256::new();
+		hasher.update(serialized_block_data);
+		let result = hasher.finalize();
+		format!("{:x}", result) 
 	}
 }
