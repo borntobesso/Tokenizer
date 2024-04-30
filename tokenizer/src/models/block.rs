@@ -30,4 +30,32 @@ impl Block {
 		let result = hasher.finalize();
 		format!("{:x}", result) 
 	}
+
+	// Create a new block. The hash will be calculated and set automatically.
+	pub fn new (
+		index: u64,
+		previous_hash: String,
+	) -> Self {
+		// Current block to be created.
+		let mut block = Block {
+			index: 0,
+			timestamp: Utc::now().timestamp_millis() as u64,
+			proof_of_work: u64::default(),
+			previous_hash: String::default(),
+			hash: String::default(),
+		};
+		block
+	}
+
+	// Mine block hash.
+	pub fn mine (&mut self, blockchain: Blockchain) {
+		loop {
+			if !self.hash.starts_with(&"0".repeat(blockchain.difficulty)) {
+				self.proof_of_work += 1;
+				self.hash = self.generate_block_hash();
+			} else {
+				break
+			}
+		}
+	}
 }
