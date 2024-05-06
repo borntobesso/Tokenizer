@@ -17,12 +17,12 @@ pub struct Blockchain {
 impl Blockchain {
 	pub fn new(difficulty: usize) -> Self {
 		// First block in the chain.
-		let mut genesis_block = Block {
+		let genesis_block = Block {
 			index: 0,
 			timestamp: Utc::now().timestamp_millis() as u64,
 			proof_of_work: u64::default(),
-			previous_hash: String::default(),
-			hash: String::default()
+			previous_hash: String::new(),
+			hash: String::new()
 		};
 		// Create chain starting from the genesis block.
 		let mut chain = Vec::new();
@@ -37,11 +37,11 @@ impl Blockchain {
 	}
 
 	pub fn add_block(&mut self) {
-		let new_block = Block::new(
+		let mut new_block = Block::new(
 			self.chain.len() as u64,
 			self.chain[&self.chain.len() - 1].previous_hash.clone()
 		);
-		new_block.mine(self.clone());
+		new_block.mine(self);
 		self.chain.push(new_block.clone());
 		println!("New block added to chain -> {:?}", new_block);
 	}

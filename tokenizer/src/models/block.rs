@@ -22,7 +22,7 @@ impl Block {
 	// Calculate block hash.
 	pub fn calculate_hash(&self) -> String {
 		let mut block_data = self.clone();
-		block_data.hash = String::defalut();
+		block_data.hash = String::new();
 		let serialized_block_data = serde_json::to_string(&block_data).unwrap();
 		// Calculate and return SHA-256 hash value.
 		let mut hasher = Sha256::new();
@@ -37,22 +37,22 @@ impl Block {
 		previous_hash: String,
 	) -> Self {
 		// Current block to be created.
-		let mut block = Block {
-			index: 0,
+		let block = Block {
+			index,
 			timestamp: Utc::now().timestamp_millis() as u64,
 			proof_of_work: u64::default(),
-			previous_hash: String::default(),
+			previous_hash,
 			hash: String::default(),
 		};
 		block
 	}
 
 	// Mine block hash.
-	pub fn mine (&mut self, blockchain: Blockchain) {
+	pub fn mine (&mut self, blockchain: &mut Blockchain) {
 		loop {
 			if !self.hash.starts_with(&"0".repeat(blockchain.difficulty)) {
 				self.proof_of_work += 1;
-				self.hash = self.generate_block_hash();
+				self.hash = self.calculate_hash();
 			} else {
 				break
 			}
